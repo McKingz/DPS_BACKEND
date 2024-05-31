@@ -5,3 +5,51 @@
 !.elasticbeanstalk/*.global.yml
 aws/dist/
 awscliv2.zip
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.env
+
+# If you are using venv
+venv/
+env/
+
+# If you are using Pipenv
+Pipfile.lock
+
+# If you are using pyenv
+.python-version
+
+# Django migrations
+**/migrations/*.pyc
+**/migrations/*.pyo
+**/migrations/*.pyd
+**/migrations/__pycache__/
+
+# Django static files and media files
+static/
+media/
+
+# Ignore database
+*.db
+
+# Local development settings
+local_settings.py
+
+# VS Code settings
+.vscode/
+
+# macOS specific
+.DS_Store
+
+# AWS specific
+.aws/
