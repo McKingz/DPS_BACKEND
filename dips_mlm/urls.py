@@ -4,6 +4,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from mlm.views import (UserDetailView, RegisterView, LoginView, ReferredUsersView, 
                        RecentActivityList, ProfileView, UserDetailUpdateView, CommissionListView)
 from mlm.views import get_referral_url
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,7 +22,6 @@ urlpatterns = [
     path('api/', include('mlm.urls')),
     path('', include('mlm.urls')),
 ]
-from django.conf import settings
-from django.conf.urls.static import static
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

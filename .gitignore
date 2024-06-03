@@ -53,3 +53,8 @@ local_settings.py
 
 # AWS specific
 .aws/
+
+venv/
+dips_mlm.zip
+dpsbackend.pem
+.env
