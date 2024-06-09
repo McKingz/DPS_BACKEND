@@ -11,7 +11,7 @@ from .models import User, Referral, Commission, Activity, UserProfile
 from .serializers import UserSerializer, ActivitySerializer, CommissionSerializer, UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
 from django.shortcuts import redirect
 
 User = get_user_model()
@@ -217,13 +217,7 @@ class SaleView(APIView):
 
     def post(self, request):
         user = request.user
-        try:
-            amount = Decimal(request.data.get('amount', '0.00'))
-        except InvalidOperation:
-            return Response({'error': 'Invalid amount'}, status=400)
-
-        if amount <= 0:
-            return Response({'error': 'Amount must be greater than zero'}, status=400)
+        amount = Decimal(request.data.get('amount', '0.00'))
 
         # Update user sales
         user.total_sales += amount
@@ -233,7 +227,7 @@ class SaleView(APIView):
         self.calculate_commissions(user, amount)
 
         return Response({'message': 'Sale recorded and commissions calculated'})
-
+    
     def calculate_commissions(self, user, amount):
         # Direct sales commission
         user.earnings += amount * Decimal('0.20')
@@ -243,16 +237,8 @@ class SaleView(APIView):
         current_level_user = user.referred_by
         level = 1
 
-        commission_rates = {
-            1: Decimal('0.10'),
-            2: Decimal('0.15'),
-            3: Decimal('0.20'),
-            4: Decimal('0.25'),
-            5: Decimal('0.30')
-        }
-
         while current_level_user and level <= 5:
-            commission_rate = commission_rates.get(level, Decimal('0'))
+            commission_rate = {1: 0.10, 2: 0.15, 3: 0.20, 4: 0.25, 5: 0.30}.get(level, 0)
             current_level_user.earnings += amount * commission_rate
             current_level_user.save()
 

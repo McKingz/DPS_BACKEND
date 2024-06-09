@@ -58,3 +58,15 @@ venv/
 dips_mlm.zip
 dpsbackend.pem
 .env
+ebextensions/
+.ebextensions/
+
+gitignore
+procfile
+test.py
+signals.py
+Procfile
+aws/
+.ebextensions/
+.elasticbeanstalk/
+
